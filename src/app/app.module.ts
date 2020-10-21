@@ -20,6 +20,8 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { AuthGuard } from './guards/auth.guard.service';
+import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,8 +43,19 @@ import {
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          name: 'email',
+        }),
+      ],
+      forms: {},
+    })
   ],
   bootstrap: [AppComponent],
+  providers: [
+    AuthGuard,
+  ]
 })
 export class AppModule {
 }

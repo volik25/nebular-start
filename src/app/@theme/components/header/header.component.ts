@@ -3,9 +3,10 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { RippleService } from '../../../@core/utils/ripple.service';
+import { NbAuthService } from '@nebular/auth';
 
 @Component({
   selector: 'ngx-header',
@@ -48,6 +49,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
+  contextMenuTag = 'userHeaderTag';
+
   userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
   public constructor(
@@ -58,6 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService,
     private rippleService: RippleService,
+    private authService: NbAuthService
   ) {
     this.materialTheme$ = this.themeService.onThemeChange()
       .pipe(map(theme => {
@@ -69,9 +73,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
 
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+    // this.userService.getUsers()
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((users: any) => this.user = users.nick);
+
+    this.menuService.onItemClick()
+      .pipe(
+        filter(({ tag }) => tag === this.contextMenuTag)
+      )
+      .subscribe(({item}) => {
+        if (item.title === 'Log out') this.logOut();
+        if (item.title === 'Profile') this.goToProgile();
+      })
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
@@ -111,5 +124,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  goToProgile(): void {
+    console.log('profile');
+  }
+
+  logOut(): void {
+    this.authService.logout('email');
   }
 }
