@@ -1,17 +1,22 @@
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
-import { ClientsComponent } from './clients.component';
-import { ClientsTableComponent } from './clients-table/clients-table.component';
-import { NbTreeGridModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbInputModule, NbRadioModule, NbTreeGridModule } from '@nebular/theme';
+import { ClientsRoutingModule, routedComponents } from './clients-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     ThemeModule,
+    NbCardModule,
+    NbInputModule,
+    NbButtonModule,
+    NbRadioModule,
+    ClientsRoutingModule,
     NbTreeGridModule,
+    ReactiveFormsModule
   ],
   declarations: [
-    ClientsComponent,
-    ClientsTableComponent,
+    ...routedComponents
   ],
 })
 export class ClientsModule { }

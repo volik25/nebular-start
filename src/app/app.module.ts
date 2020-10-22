@@ -6,7 +6,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
@@ -21,7 +21,9 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { AuthGuard } from './guards/auth.guard.service';
-import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
+import { NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
+import { ApiService } from './services/api.service';
+import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,6 +49,26 @@ import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
       strategies: [
         NbPasswordAuthStrategy.setup({
           name: 'email',
+          baseEndpoint: 'http://localhost:9000',
+          login: {
+            endpoint: '/auth',
+          },
+          register: {
+            endpoint: '/users/sign-up',
+          },
+          logout: {
+            endpoint: '/auth/sign-out',
+          },
+          requestPass: {
+            endpoint: '/auth/request-pass',
+          },
+          resetPass: {
+            endpoint: '/auth/reset-pass',
+          },
+          token: {
+            class: NbAuthJWTToken,
+            key: 'token',
+          }
         }),
       ],
       forms: {},
@@ -55,6 +77,8 @@ import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
   bootstrap: [AppComponent],
   providers: [
     AuthGuard,
+    ApiService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ]
 })
 export class AppModule {
