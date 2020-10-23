@@ -13,7 +13,7 @@ export interface Account{
     accountId: string;
     owner: number;
     openDate: string;
-    status: AccountStatuses
+    status: AccountStatuses;
 }
 
 export interface Transaction{
@@ -25,32 +25,32 @@ export interface Transaction{
 
 export interface TypesDescription{
     value: ClientTypes;
-    description: string
+    description: string;
 }
 
 export interface StatusDescription{
     value: AccountStatuses;
-    description: string
+    description: string;
 }
 
 export const TypesValues: TypesDescription[] = [
     {
         value: ClientTypes.Entity,
-        description: 'Organization/Employer'
+        description: 'Organization/Employer',
     },
     {
         value: ClientTypes.Individual,
-        description: 'Individual'
-    }
+        description: 'Individual',
+    },
 ];
 
 export const StatusValues: StatusDescription[] = [
     {
         value: AccountStatuses.Active,
-        description: 'Active'
+        description: 'Active',
     },
     {
         value: AccountStatuses.Blocked,
-        description: 'Blocked'
-    }
+        description: 'Blocked',
+    },
 ];

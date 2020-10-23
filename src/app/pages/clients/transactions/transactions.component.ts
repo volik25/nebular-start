@@ -4,10 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'ngx-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./transactions.component.scss']
+  styleUrls: ['./transactions.component.scss'],
 })
 export class TransactionsComponent implements OnInit {
-  transactionForm: FormGroup
+  transactionForm: FormGroup;
   constructor(private fb: FormBuilder) {
     this._initForm();
   }
@@ -19,12 +19,12 @@ export class TransactionsComponent implements OnInit {
     this.transactionForm = this.fb.group({
       OutNumber: [null, Validators.required],
       InNumber: [null, Validators.required],
-      Amount: [null, Validators.required]
-    })
+      Amount: [null, Validators.required],
+    });
   }
 
   submit() {
     console.log(this.transactionForm.getRawValue());
-    
+
   }
 }

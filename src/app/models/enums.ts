@@ -1,9 +1,9 @@
 export enum ClientTypes{
     Entity,
-    Individual
+    Individual,
 }
 
 export enum AccountStatuses{
     Active,
-    Blocked
+    Blocked,
 }

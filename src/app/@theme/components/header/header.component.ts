@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService,
     private rippleService: RippleService,
-    private authService: NbAuthService
+    private authService: NbAuthService,
   ) {
     this.materialTheme$ = this.themeService.onThemeChange()
       .pipe(map(theme => {
@@ -81,12 +81,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.menuService.onItemClick()
       .pipe(
-        filter(({ tag }) => tag === this.contextMenuTag)
+        filter(({ tag }) => tag === this.contextMenuTag),
       )
       .subscribe(({item}) => {
         if (item.title === 'Log out') this.logOut();
         if (item.title === 'Profile') this.goToProgile();
-      })
+      });
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()

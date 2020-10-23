@@ -27,7 +27,7 @@ interface FSEntry {
 @Component({
   selector: 'ngx-clients-list',
   templateUrl: './clients-table.component.html',
-  styleUrls: ['./clients-table.component.scss']
+  styleUrls: ['./clients-table.component.scss'],
 })
 export class ClientsTableComponent implements OnInit {
   @ViewChild('clientForm') form: ElementRef<HTMLElement>;
@@ -68,8 +68,8 @@ export class ClientsTableComponent implements OnInit {
       .subscribe(({tag, item}) => {
         if (item.title === 'Edit') this.editClient(tag);
         if (item.title === 'Delete') this.removeClient(tag);
-      })
-    })
+      });
+    });
   }
 
   updateSort(sortRequest: NbSortRequest): void {
@@ -98,23 +98,23 @@ export class ClientsTableComponent implements OnInit {
       let balance = 0;
       if (client.INN) {
         this.accounts.forEach(acc => {
-          if (client.id == acc.owner) {
+          if (client.id === acc.owner) {
             this.transactions.forEach(transact => {
-              if (transact.inAccount == acc.accountId) {
+              if (transact.inAccount === acc.accountId) {
                 inSum += transact.summ;
                 balance += inSum;
               }
-              if (transact.outAccount == acc.accountId) {
+              if (transact.outAccount === acc.accountId) {
                 outSum += transact.summ;
                 balance -= outSum;
               }
-            })
+            });
             this.data.push({
               data: {
                 ...client,
                 inSum: inSum,
                 outSum: outSum,
-                balance: balance
+                balance: balance,
               },
               children: [
                 { data: { name: 'April', inSum: inSum, outSum: outSum, balance: balance} },
@@ -122,11 +122,11 @@ export class ClientsTableComponent implements OnInit {
                 { data: { name: 'June', inSum: inSum, outSum: outSum, balance: balance} },
                 { data: { name: 'July', inSum: inSum, outSum: outSum, balance: balance} },
                 { data: { name: 'August', inSum: inSum, outSum: outSum, balance: balance} },
-                { data: { name: 'September', inSum: inSum, outSum: outSum, balance: balance} }
-              ]
-            })
+                { data: { name: 'September', inSum: inSum, outSum: outSum, balance: balance} },
+              ],
+            });
           }
-        })
+        });
       }
     });
   }
@@ -134,7 +134,7 @@ export class ClientsTableComponent implements OnInit {
   editClient(id){
     this.form.nativeElement.scrollIntoView({block: 'nearest', behavior: 'smooth'});
     console.log(id);
-    this.editingClient = this.clients.find(x => x.id == id);
+    this.editingClient = this.clients.find(x => x.id === id);
   }
 
   removeClient(id){

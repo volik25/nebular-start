@@ -18,7 +18,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Transactions',
         link: '/pages/clients/transactions',
-      }
+      },
     ],
   },
   {

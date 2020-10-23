@@ -69,11 +69,11 @@ import { ClientService } from './services/clients.service';
           token: {
             class: NbAuthJWTToken,
             key: 'token',
-          }
+          },
         }),
       ],
       forms: {},
-    })
+    }),
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -81,7 +81,7 @@ import { ClientService } from './services/clients.service';
     ApiService,
     ClientService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  ]
+  ],
 })
 export class AppModule {
 }

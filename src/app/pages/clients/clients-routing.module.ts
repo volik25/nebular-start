@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from '@angular/router';
 import { ClientsTableComponent } from './clients-table/clients-table.component';
 import { ClientsComponent } from './clients.component';
 import { TransactionsComponent } from './transactions/transactions.component';
@@ -15,7 +15,7 @@ const routes: Routes = [{
       {
         path: 'transactions',
         component: TransactionsComponent,
-      }
+      },
     ],
   }];
 
@@ -24,9 +24,9 @@ const routes: Routes = [{
     exports: [RouterModule],
   })
   export class ClientsRoutingModule { }
-  
+
   export const routedComponents = [
     ClientsComponent,
     ClientsTableComponent,
-    TransactionsComponent
+    TransactionsComponent,
   ];

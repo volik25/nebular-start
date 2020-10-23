@@ -20,15 +20,15 @@ import { ClientFormComponent } from './client-form/client-form.component';
     ClientsRoutingModule,
     NbTreeGridModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [
     ...routedComponents,
     FsIconComponent,
-    ClientFormComponent
+    ClientFormComponent,
   ],
   providers: [
-    FormBuilder
-  ]
+    FormBuilder,
+  ],
 })
 export class ClientsModule { }

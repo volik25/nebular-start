@@ -1,11 +1,11 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client, TypesValues } from '../../../models/models';
 
 @Component({
   selector: 'ngx-client-form',
   templateUrl: './client-form.component.html',
-  styleUrls: ['./client-form.component.scss']
+  styleUrls: ['./client-form.component.scss'],
 })
 export class ClientFormComponent implements OnChanges {
   @Input() client: Client;
@@ -27,13 +27,13 @@ export class ClientFormComponent implements OnChanges {
       name: [null, Validators.required],
       createDate: [null, Validators.required],
       address: [null, Validators.required],
-      INN: [null]
-    })
+      INN: [null],
+    });
   }
 
   submit(): void {
     console.log(this.clientForm.getRawValue());
-    
+
   }
 
 }

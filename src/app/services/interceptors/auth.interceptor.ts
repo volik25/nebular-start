@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
   constructor() {}
 
   public intercept(req: HttpRequest<{}>, next: HttpHandler): Observable<HttpEvent<{}>> {
