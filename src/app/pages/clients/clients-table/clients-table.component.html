@@ -1,3 +1,7 @@
+<div #clientForm>
+  <ngx-client-form [client]="editingClient"></ngx-client-form>
+</div>
+
 <nb-card>
   <nb-card-body>
 
@@ -17,7 +21,6 @@
           <nb-icon
           [nbContextMenu]="tableMenu"
           [nbContextMenuTag]="row.data.id"
-          nbContextMenuTrigger="hover"
           icon="edit-2-outline" 
           *ngIf="row.data.type != null"></nb-icon>
           <ngx-fs-icon [type]="row.data.type" [expanded]="row.expanded"></ngx-fs-icon>
@@ -38,6 +41,3 @@
 
   </nb-card-body>
 </nb-card>
-<div #clientForm>
-  <ngx-client-form [client]="editingClient"></ngx-client-form>
-</div>

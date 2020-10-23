@@ -132,7 +132,7 @@ export class ClientsTableComponent implements OnInit {
   }
 
   editClient(id){
-    this.form.nativeElement.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+    this.form.nativeElement.scrollIntoView({block: 'center', behavior: 'smooth'});
     console.log(id);
     this.editingClient = this.clients.find(x => x.id === id);
   }

@@ -6,13 +6,25 @@
           <div class="form-group row">
             <label for="OutAccountNumber" class="label col-sm-3 col-form-label">Outgoing account</label>
             <div class="col-sm-9">
-              <input formControlName="OutNumber" type="number" nbInput fullWidth id="OutAccountNumber" placeholder="OutAccount number">
+              <nb-select placeholder="OutAccount number" formControlName="OutNumber" id="OutAccountNumber" fullWidth>
+                <nb-option *ngFor="let num of accountsNumber" [value]="num">{{num}}</nb-option>
+              </nb-select>
             </div>
           </div>
           <div class="form-group row">
             <label for="InAccountNumber" class="label col-sm-3 col-form-label">Incoming account</label>
             <div class="col-sm-9">
-              <input formControlName="InNumber" type="number" nbInput fullWidth id="InAccountNumber" placeholder="InAccount number">
+              <nb-select placeholder="InAccount number" formControlName="InNumber" id="InAccountNumber" fullWidth>
+                <nb-option *ngFor="let num of accountsNumber" [value]="num">{{num}}</nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="date" class="label col-sm-3 col-form-label">Create Date</label>
+            <div class="col-sm-9">
+              <input nbInput fullWidth placeholder="Date" [nbDatepicker]="picker" formControlName="date"
+                id="date">
+              <nb-datepicker #picker></nb-datepicker>
             </div>
           </div>
           <div class="form-group row">

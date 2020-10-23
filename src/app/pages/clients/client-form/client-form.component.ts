@@ -33,7 +33,11 @@ export class ClientFormComponent implements OnChanges {
 
   submit(): void {
     console.log(this.clientForm.getRawValue());
+  }
 
+  clear(): void {
+    this.client = null;
+    this._initForm();
   }
 
 }
