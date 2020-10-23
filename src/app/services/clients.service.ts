@@ -9,10 +9,6 @@ export class ClientService{
     private accounts = accounts;
     private transactions = transactions;
 
-    constructor() {
-
-    }
-
     getClients(): Observable<any> {
         return observableOf(this.clients);
     }
