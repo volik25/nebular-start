@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
-import { NbButtonModule, NbCardModule, NbInputModule, NbRadioModule, NbTreeGridModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbContextMenuModule, NbDatepickerModule, NbIconModule, NbInputModule, NbRadioModule, NbSelectModule, NbTreeGridModule } from '@nebular/theme';
 import { ClientsRoutingModule, routedComponents } from './clients-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FsIconComponent } from './clients-table/clients-table.component';
+import { ClientFormComponent } from './client-form/client-form.component';
 
 @NgModule({
   imports: [
@@ -11,12 +13,22 @@ import { ReactiveFormsModule } from '@angular/forms';
     NbInputModule,
     NbButtonModule,
     NbRadioModule,
+    NbIconModule,
+    NbSelectModule,
+    NbDatepickerModule,
+    NbContextMenuModule,
     ClientsRoutingModule,
     NbTreeGridModule,
+    FormsModule,
     ReactiveFormsModule
   ],
   declarations: [
-    ...routedComponents
+    ...routedComponents,
+    FsIconComponent,
+    ClientFormComponent
   ],
+  providers: [
+    FormBuilder
+  ]
 })
 export class ClientsModule { }

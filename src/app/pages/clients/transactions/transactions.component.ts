@@ -23,4 +23,8 @@ export class TransactionsComponent implements OnInit {
     })
   }
 
+  submit() {
+    console.log(this.transactionForm.getRawValue());
+    
+  }
 }
