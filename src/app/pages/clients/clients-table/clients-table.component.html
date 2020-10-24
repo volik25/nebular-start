@@ -1,5 +1,11 @@
-<div #clientForm>
-  <ngx-client-form [client]="editingClient"></ngx-client-form>
+<div class="row">
+  <div class="col-md-5" #clientForm>
+    <ngx-client-form [client]="editingClient"></ngx-client-form>
+  </div>
+  <div class="col-md-1"></div>
+  <div class="col-md-6">
+    <ngx-account-form [clients]="clients"></ngx-account-form>
+  </div>
 </div>
 
 <nb-card>

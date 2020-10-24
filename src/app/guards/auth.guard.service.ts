@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate() {
-      return true;
+    // return true;
     return this.authService.isAuthenticated()
       .pipe(
         tap(authenticated => {

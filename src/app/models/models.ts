@@ -1,5 +1,11 @@
 import { AccountStatuses, ClientTypes } from './enums';
 
+export interface User{
+    id?: string;
+    name: string;
+    picture: string;
+}
+
 export interface Client{
     id?: number;
     type: ClientTypes;

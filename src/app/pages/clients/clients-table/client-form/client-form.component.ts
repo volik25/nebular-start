@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Client, TypesValues } from '../../../models/models';
+import { Client, TypesValues } from '../../../../models/models';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
   selector: 'ngx-client-form',
@@ -11,7 +12,7 @@ export class ClientFormComponent implements OnChanges {
   @Input() client: Client;
   clientForm: FormGroup;
   public types = TypesValues;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private api: ApiService) {
     this._initForm();
   }
 
@@ -32,7 +33,12 @@ export class ClientFormComponent implements OnChanges {
   }
 
   submit(): void {
-    console.log(this.clientForm.getRawValue());
+    if (this.clientForm.invalid) {
+      return
+    }
+    this.api.addClient(this.clientForm.getRawValue()).subscribe(res => {
+      console.log(res);
+    })
   }
 
   clear(): void {

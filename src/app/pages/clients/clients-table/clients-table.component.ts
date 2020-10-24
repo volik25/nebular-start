@@ -1,7 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NbMenuService, NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { forkJoin } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { ClientTypes } from '../../../models/enums';
 import { Account, Client, Transaction } from '../../../models/models';
 import { ApiService } from '../../../services/api.service';
@@ -42,6 +41,7 @@ export class ClientsTableComponent implements OnInit {
 
   private data: TreeNode<FSEntry>[] = [];
   clients: Client[];
+  clientsTest: Client[];
   accounts: Account[];
   transactions: Transaction[];
 
@@ -52,14 +52,18 @@ export class ClientsTableComponent implements OnInit {
   editingClient = null;
 
   constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
-              private api: ClientService,
+              private api: ApiService,
+              private cs: ClientService,
               private menuService: NbMenuService) {
   }
 
   ngOnInit() {
-    const requests = [this.api.getClients(), this.api.getAccounts(), this.api.getTransactions()];
-    forkJoin(requests).subscribe(([clients, accounts, trans]) => {
+    this.api.getClients().subscribe(clients => {
       this.clients = clients;
+    })
+    const requests = [this.cs.getClients(), this.cs.getAccounts(), this.cs.getTransactions()];
+    forkJoin(requests).subscribe(([clients, accounts, trans]) => {
+      this.clientsTest = clients;
       this.accounts = accounts;
       this.transactions = trans;
       this.tableGenerate();
@@ -92,7 +96,7 @@ export class ClientsTableComponent implements OnInit {
   }
 
   tableGenerate(): void {
-    this.clients.forEach(client => {
+    this.clientsTest.forEach(client => {
       let inSum = 0;
       let outSum = 0;
       let balance = 0;
@@ -134,7 +138,7 @@ export class ClientsTableComponent implements OnInit {
   editClient(id){
     this.form.nativeElement.scrollIntoView({block: 'center', behavior: 'smooth'});
     console.log(id);
-    this.editingClient = this.clients.find(x => x.id === id);
+    this.editingClient = this.clientsTest.find(x => x.id === id);
   }
 
   removeClient(id){

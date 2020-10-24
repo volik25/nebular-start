@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-
-import { UserData } from '../../../@core/data/users';
+import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService, NbToastRef, NbToastrService } from '@nebular/theme';
 import { LayoutService } from '../../../@core/utils';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { RippleService } from '../../../@core/utils/ripple.service';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { Router } from '@angular/router';
+import { User } from '../../../models/models';
+import { ApiService } from '../../../services/api.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'ngx-header',
@@ -18,7 +20,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   public readonly materialTheme$: Observable<boolean>;
   userPictureOnly: boolean = false;
-  user = {};
+  user: User = null;
+  toastRef: NbToastRef = null;
 
   themes = [
     {
@@ -61,6 +64,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private breakpointService: NbMediaBreakpointsService,
     private rippleService: RippleService,
     private authService: NbAuthService,
+    private toastrService: NbToastrService,
+    private router: Router,
+    private us: UserService
   ) {
     this.materialTheme$ = this.themeService.onThemeChange()
       .pipe(map(theme => {
@@ -71,21 +77,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
-
-    this.authService.onTokenChange()
-      .subscribe((token: NbAuthJWTToken) => {
-        if (token.isValid()) {
-          this.user = token.getPayload();
-        }
-      });
-
+    this.us.getUser().subscribe(user => {
+      this.user = user;
+    })
     this.menuService.onItemClick()
       .pipe(
         filter(({ tag }) => tag === this.contextMenuTag),
       )
       .subscribe(({item}) => {
         if (item.title === 'Log out') this.logOut();
-        if (item.title === 'Profile') this.goToProgile();
+        if (item.title === 'Profile') this.goToProfile();
       });
 
     const { xl } = this.breakpointService.getBreakpointsMap();
@@ -128,11 +129,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  goToProgile(): void {
+  goToProfile(): void {
     console.log('profile');
   }
 
   logOut(): void {
-    this.authService.logout('email');
+    this.authService.logout('email').subscribe( res => {
+      console.log(res);
+      
+      if (res.isSuccess()) {
+        this.toastRef = this.toastrService.show('Success logget out', 'Success', {
+          status: 'success',
+          icon: 'checkmark-circle-2-outline',
+          preventDuplicates: true
+        });
+        setTimeout(() => {
+          this.router.navigate(['auth/login']);
+        }, 3000);
+      }
+      if (res.isFailure()) {
+        this.toastRef = this.toastrService.show('Logged out failure', 'Error', {
+          status: 'danger',
+          icon: 'alert-triangle-outline',
+          preventDuplicates: true
+        });
+      }
+    });
   }
 }

@@ -21,10 +21,11 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { AuthGuard } from './guards/auth.guard.service';
-import { NbAuthJWTToken, NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
+import { NbAuthJWTToken, NbAuthModule, NbAuthSimpleToken, NbDummyAuthStrategy, NbPasswordAuthStrategy } from '@nebular/auth';
 import { ApiService } from './services/api.service';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
 import { ClientService } from './services/clients.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,9 +34,7 @@ import { ClientService } from './services/clients.service';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
     ThemeModule.forRoot(),
-
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -48,29 +47,37 @@ import { ClientService } from './services/clients.service';
     CoreModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: [
-        NbPasswordAuthStrategy.setup({
+        NbDummyAuthStrategy.setup({
           name: 'email',
-          baseEndpoint: 'http://localhost:9000',
-          login: {
-            endpoint: '/auth',
-          },
-          register: {
-            endpoint: '/users/sign-up',
-          },
-          logout: {
-            endpoint: '/auth/sign-out',
-          },
-          requestPass: {
-            endpoint: '/auth/request-pass',
-          },
-          resetPass: {
-            endpoint: '/auth/reset-pass',
-          },
           token: {
-            class: NbAuthJWTToken,
-            key: 'token',
+            class: NbAuthSimpleToken,
           },
-        }),
+          delay: 2000,
+          alwaysFail: false
+        })
+        // NbPasswordAuthStrategy.setup({
+        //   name: 'email',
+        //   baseEndpoint: 'http://localhost:9000',
+        //   login: {
+        //     endpoint: '/auth',
+        //   },
+        //   register: {
+        //     endpoint: '/users/sign-up',
+        //   },
+        //   logout: {
+        //     endpoint: '/auth/sign-out',
+        //   },
+        //   requestPass: {
+        //     endpoint: '/auth/request-pass',
+        //   },
+        //   resetPass: {
+        //     endpoint: '/auth/reset-pass',
+        //   },
+        //   token: {
+        //     class: NbAuthJWTToken,
+        //     key: 'token',
+        //   },
+        // }),
       ],
       forms: {},
     }),
@@ -80,6 +87,7 @@ import { ClientService } from './services/clients.service';
     AuthGuard,
     ApiService,
     ClientService,
+    UserService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 })

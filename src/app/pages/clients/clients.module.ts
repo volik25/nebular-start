@@ -4,7 +4,8 @@ import { NbButtonModule, NbCardModule, NbContextMenuModule, NbDatepickerModule, 
 import { ClientsRoutingModule, routedComponents } from './clients-routing.module';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FsIconComponent } from './clients-table/clients-table.component';
-import { ClientFormComponent } from './client-form/client-form.component';
+import { AccountFormComponent } from './clients-table/account-form/account-form.component';
+import { ClientFormComponent } from './clients-table/client-form/client-form.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { ClientFormComponent } from './client-form/client-form.component';
     ...routedComponents,
     FsIconComponent,
     ClientFormComponent,
+    AccountFormComponent,
   ],
   providers: [
     FormBuilder,

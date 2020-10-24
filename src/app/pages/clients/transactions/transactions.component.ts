@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account, Transaction } from '../../../models/models';
+import { ApiService } from '../../../services/api.service';
 import { ClientService } from '../../../services/clients.service';
 
 @Component({
@@ -11,12 +12,12 @@ import { ClientService } from '../../../services/clients.service';
 export class TransactionsComponent implements OnInit {
   transactionForm: FormGroup;
   accountsNumber: number[] = [];
-  constructor(private fb: FormBuilder, private api: ClientService) {
+  constructor(private fb: FormBuilder, private cs: ClientService, private api: ApiService) {
     this._initForm();
   }
 
   ngOnInit(): void {
-    this.api.getAccounts().subscribe(accounts => {
+    this.cs.getAccounts().subscribe(accounts => {
       accounts.forEach(account => {
         this.accountsNumber.push(account.accountId)
       });
@@ -25,15 +26,19 @@ export class TransactionsComponent implements OnInit {
 
   _initForm(): void {
     this.transactionForm = this.fb.group({
-      OutNumber: [null, Validators.required],
-      InNumber: [null, Validators.required],
-      Amount: [null, Validators.required],
+      outNumber: [null, Validators.required],
+      inNumber: [null, Validators.required],
+      amount: [null, Validators.required],
       date: [null, Validators.required]
     });
   }
 
   submit() {
-    console.log(this.transactionForm.getRawValue());
-
+    if (this.transactionForm.invalid) {
+      return
+    }
+    this.api.addTransaction(this.transactionForm.getRawValue()).subscribe(transaction => {
+      console.log(transaction);
+    })
   }
 }

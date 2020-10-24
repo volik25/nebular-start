@@ -1,5 +1,11 @@
 import { AccountStatuses, ClientTypes } from '../../models/enums';
-import { Account, Client, Transaction } from '../../models/models';
+import { Account, Client, Transaction, User } from '../../models/models';
+
+export const user: User = {
+    id: "5f91852d2d12c83d08949ba8",
+    name: "Ivan Volik",
+    picture: "https://gravatar.com/avatar/69951d59212182ed7bcdcac4967e652b?d=identicon"
+}
 
 export const clients: Client[] = [
     {
