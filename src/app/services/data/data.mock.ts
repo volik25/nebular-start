@@ -1,15 +1,16 @@
+import { url } from 'inspector';
 import { AccountStatuses, ClientTypes } from '../../models/enums';
 import { Account, Client, Transaction, User } from '../../models/models';
 
 export const user: User = {
     id: "5f91852d2d12c83d08949ba8",
     name: "Ivan Volik",
-    picture: "https://gravatar.com/avatar/69951d59212182ed7bcdcac4967e652b?d=identicon"
+    picture: "assets/images/author.jpg"
 }
 
 export const clients: Client[] = [
     {
-        id: 1,
+        id: '1',
         type: ClientTypes.Individual,
         name: 'Волков Андрей',
         createDate: '08.02.1976',
@@ -17,7 +18,7 @@ export const clients: Client[] = [
         INN: '8265438767',
     },
     {
-        id: 2,
+        id: '2',
         type: ClientTypes.Entity,
         name: 'ПАО Кортеж',
         createDate: '12.05.2015',
@@ -25,7 +26,7 @@ export const clients: Client[] = [
         INN: '4567321452',
     },
     {
-        id: 3,
+        id: '3',
         type: ClientTypes.Entity,
         name: 'ИП Иванченко',
         createDate: '02.08.1986',
@@ -33,7 +34,7 @@ export const clients: Client[] = [
         INN: '1113334312',
     },
     {
-        id: 4,
+        id: '4',
         type: ClientTypes.Entity,
         name: 'Семенов Петр',
         createDate: '14.12.1998',
@@ -43,26 +44,26 @@ export const clients: Client[] = [
 
 export const accounts: Account[] = [
     {
-        accountId: '1111',
-        owner: 1,
+        id: '1111',
+        owner: '1',
         openDate: '12.12.2015',
         status: AccountStatuses.Active,
     },
     {
-        accountId: '2222',
-        owner: 2,
+        id: '2222',
+        owner: '2',
         openDate: '12.12.2015',
         status: AccountStatuses.Active,
     },
     {
-        accountId: '3333',
-        owner: 3,
+        id: '3333',
+        owner: '3',
         openDate: '12.12.2015',
         status: AccountStatuses.Active,
     },
     {
-        accountId: '4444',
-        owner: 4,
+        id: '4444',
+        owner: '4',
         openDate: '12.12.2015',
         status: AccountStatuses.Active,
     },
@@ -72,37 +73,37 @@ export const transactions: Transaction[] = [
     {
         inAccount: '2222',
         outAccount: '1111',
-        summ: 2000,
+        amount: 2000,
         date: '15.09.2020',
     },
     {
         inAccount: '1111',
         outAccount: '2222',
-        summ: 8000,
+        amount: 8000,
         date: '15.08.2020',
     },
     {
         inAccount: '2222',
         outAccount: '3333',
-        summ: 10000,
+        amount: 10000,
         date: '15.07.2020',
     },
     {
         inAccount: '3333',
         outAccount: '1111',
-        summ: 1324,
+        amount: 1324,
         date: '15.06.2020',
     },
     {
         inAccount: '1111',
         outAccount: '2222',
-        summ: 5634,
+        amount: 5634,
         date: '15.05.2020',
     },
     {
         inAccount: '3333',
         outAccount: '2222',
-        summ: 24563,
+        amount: 24563,
         date: '15.04.2020',
     },
 ];

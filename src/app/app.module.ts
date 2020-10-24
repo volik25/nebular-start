@@ -20,7 +20,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import { AuthGuard } from './guards/auth.guard.service';
+import { AuthGuard } from './services/guards/auth.guard.service';
 import { NbAuthJWTToken, NbAuthModule, NbAuthSimpleToken, NbDummyAuthStrategy, NbPasswordAuthStrategy } from '@nebular/auth';
 import { ApiService } from './services/api.service';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';

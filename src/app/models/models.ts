@@ -1,4 +1,4 @@
-import { AccountStatuses, ClientTypes } from './enums';
+import { AccountStatuses, ClientTypes, TransactionTypes } from './enums';
 
 export interface User{
     id?: string;
@@ -7,7 +7,7 @@ export interface User{
 }
 
 export interface Client{
-    id?: number;
+    id?: string;
     type: ClientTypes;
     name: string;
     createDate: string;
@@ -16,27 +16,35 @@ export interface Client{
 }
 
 export interface Account{
-    accountId: string;
-    owner: number;
+    id?: string;
+    owner: string;
     openDate: string;
+    balance?: number;
     status: AccountStatuses;
 }
 
 export interface Transaction{
+    id?: string;
     inAccount: string;
     outAccount: string;
-    summ: number;
+    amount: number;
     date: string;
 }
 
-export interface TypesDescription{
-    value: ClientTypes;
+export interface Description{
     description: string;
 }
 
-export interface StatusDescription{
+export interface TypesDescription extends Description{
+    value: ClientTypes;
+}
+
+export interface StatusDescription extends Description{
     value: AccountStatuses;
-    description: string;
+}
+
+export interface TransactionTypesDescription extends Description{
+    value: TransactionTypes;
 }
 
 export const TypesValues: TypesDescription[] = [
@@ -60,3 +68,14 @@ export const StatusValues: StatusDescription[] = [
         description: 'Blocked',
     },
 ];
+
+export const TransactionValues: TransactionTypesDescription[] = [
+    {
+        value: TransactionTypes.Incoming,
+        description: 'Incoming'
+    },
+    {
+        value: TransactionTypes.Outgoing,
+        description: 'Outgoing'
+    }
+]

@@ -7,3 +7,8 @@ export enum AccountStatuses{
     Active,
     Blocked,
 }
+
+export enum TransactionTypes{
+    Incoming,
+    Outgoing
+}

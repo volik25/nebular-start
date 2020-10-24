@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Client, StatusValues } from '../../../../models/models';
+import { NbDateService } from '@nebular/theme';
+import { Account, Client, StatusValues } from '../../../../models/models';
 import { ApiService } from '../../../../services/api.service';
 
 @Component({
@@ -12,8 +13,10 @@ export class AccountFormComponent implements OnInit {
   @Input() clients: Client[];
   public statuses = StatusValues;
   accountForm: FormGroup;
-  constructor(private fb: FormBuilder, private api: ApiService) {
+  maxValue: Date;
+  constructor(private fb: FormBuilder, private api: ApiService, protected dateService: NbDateService<Date>) {
     this._initForm();
+    this.maxValue = this.dateService.addDay(this.dateService.today(), 0);
   }
 
   ngOnInit(): void {
@@ -21,7 +24,6 @@ export class AccountFormComponent implements OnInit {
 
   _initForm(): void {
     this.accountForm = this.fb.group({
-      accountId: [null, Validators.required],
       owner: [null, Validators.required],
       openDate: [null, Validators.required],
       status: [null, Validators.required]
@@ -32,8 +34,11 @@ export class AccountFormComponent implements OnInit {
     if (this.accountForm.invalid) {
       return
     }
-    this.api.addAccount(this.accountForm.getRawValue()).subscribe(account => {
+    let account: Account = this.accountForm.getRawValue();
+    account.balance = 0;
+    this.api.addAccount(account).subscribe(account => {
       console.log(account);
+      this._initForm();
     })
   }
 

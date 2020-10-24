@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client, TypesValues } from '../../../../models/models';
 import { ApiService } from '../../../../services/api.service';
@@ -10,6 +10,7 @@ import { ApiService } from '../../../../services/api.service';
 })
 export class ClientFormComponent implements OnChanges {
   @Input() client: Client;
+  @Output() data: EventEmitter<any> = new EventEmitter();
   clientForm: FormGroup;
   public types = TypesValues;
   constructor(private fb: FormBuilder, private api: ApiService) {
@@ -36,9 +37,20 @@ export class ClientFormComponent implements OnChanges {
     if (this.clientForm.invalid) {
       return
     }
-    this.api.addClient(this.clientForm.getRawValue()).subscribe(res => {
-      console.log(res);
-    })
+    if (this.client) {
+      this.api.updateClient(this.client.id, this.clientForm.getRawValue()).subscribe(client => {
+        console.log(client);
+        this.data.emit([client, 'update']);
+        this._initForm();
+      })
+    }
+    else{
+      this.api.addClient(this.clientForm.getRawValue()).subscribe(client => {
+        console.log(client);
+        this.data.emit([client, 'new']);
+        this._initForm();
+      })
+    }
   }
 
   clear(): void {

@@ -24,15 +24,15 @@ export class ApiService{
         return this.http.get(`${this.baseUrl}/transactions`);
     }
 
-    public getClient(id: number): Observable<any> {
+    public getClient(id: string): Observable<any> {
         return this.http.get(`${this.baseUrl}/clients/${id}`);
     }
 
-    public getAccount(id: number): Observable<any> {
+    public getAccount(id: string): Observable<any> {
         return this.http.get(`${this.baseUrl}/accounts/${id}`);
     }
 
-    public getTransaction(id: number): Observable<any> {
+    public getTransaction(id: string): Observable<any> {
         return this.http.get(`${this.baseUrl}/transactions/${id}`);
     }
 
@@ -48,27 +48,27 @@ export class ApiService{
         return this.http.post(`${this.baseUrl}/transactions`, transaction);
     }
 
-    public updateClient(id: number, client: Client): Observable<any> {
+    public updateClient(id: string, client: Client): Observable<any> {
         return this.http.put(`${this.baseUrl}/clients/${id}`, client);
     }
 
-    public updateAccount(id: number, account: Account): Observable<any> {
+    public updateAccount(id: string, account: Account): Observable<any> {
         return this.http.put(`${this.baseUrl}/accounts/${id}`, account);
     }
 
-    public updateTransaction(id: number, transaction: Transaction): Observable<any> {
+    public updateTransaction(id: string, transaction: Transaction): Observable<any> {
         return this.http.put(`${this.baseUrl}/transactions/${id}`, transaction);
     }
 
-    public deleteClient(id: number): Observable<any> {
+    public deleteClient(id: string): Observable<any> {
         return this.http.delete(`${this.baseUrl}/clients/${id}`);
     }
 
-    public deleteAccount(id: number): Observable<any> {
+    public deleteAccount(id: string): Observable<any> {
         return this.http.delete(`${this.baseUrl}/accounts/${id}`);
     }
 
-    public deleteTransaction(id: number): Observable<any> {
+    public deleteTransaction(id: string): Observable<any> {
         return this.http.delete(`${this.baseUrl}/transactions/${id}`);
     }
 }

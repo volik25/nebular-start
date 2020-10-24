@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { NbMenuService, NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
 import { forkJoin } from 'rxjs';
 import { ClientTypes } from '../../../models/enums';
@@ -28,7 +28,7 @@ interface FSEntry {
   templateUrl: './clients-table.component.html',
   styleUrls: ['./clients-table.component.scss'],
 })
-export class ClientsTableComponent implements OnInit {
+export class ClientsTableComponent implements OnInit, OnChanges {
   @ViewChild('clientForm') form: ElementRef<HTMLElement>;
   customColumn = 'name';
   defaultColumns = [ 'inSum', 'outSum', 'balance', 'INN' ];
@@ -76,6 +76,10 @@ export class ClientsTableComponent implements OnInit {
     });
   }
 
+  ngOnChanges() {
+    this.getClients();
+  }
+
   updateSort(sortRequest: NbSortRequest): void {
     this.sortColumn = sortRequest.column;
     this.sortDirection = sortRequest.direction;
@@ -95,6 +99,31 @@ export class ClientsTableComponent implements OnInit {
     return minWithForMultipleColumns + (nextColumnStep * index);
   }
 
+  getClients(): void {
+    
+  }
+
+  update(data){
+    const action = data[1];
+    const client = data[0];
+    switch (action) {
+      case 'new':
+        this.clients.push(client);
+        break;
+      case 'update':
+        for (let i = 0; i < this.clients.length; i++) {
+          const oldClient = this.clients[i];
+          if (oldClient.id === client.id) {
+            this.clients[i] = client;
+            break;
+          }
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
   tableGenerate(): void {
     this.clientsTest.forEach(client => {
       let inSum = 0;
@@ -104,12 +133,12 @@ export class ClientsTableComponent implements OnInit {
         this.accounts.forEach(acc => {
           if (client.id === acc.owner) {
             this.transactions.forEach(transact => {
-              if (transact.inAccount === acc.accountId) {
-                inSum += transact.summ;
+              if (transact.inAccount === acc.id) {
+                inSum += transact.amount;
                 balance += inSum;
               }
-              if (transact.outAccount === acc.accountId) {
-                outSum += transact.summ;
+              if (transact.outAccount === acc.id) {
+                outSum += transact.amount;
                 balance -= outSum;
               }
             });

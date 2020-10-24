@@ -1,5 +1,65 @@
-<div class="row">
-  <nb-card>
-    <nb-card-body>Hello from ngx-admin sandbox project.</nb-card-body>
-  </nb-card>
-</div>
+<nb-tabset fullWidth>
+  <nb-tab tabTitle="Clients">
+    <nb-card *ngFor="let client of clients">
+      <nb-card-header>
+        {{client.name}}
+      </nb-card-header>
+      <nb-card-body>
+        <div>
+          INN: {{client.INN}}
+        </div>
+        <div>
+          Address: {{client.address}}
+        </div>
+        <div>
+          Date: {{client.createDate | date: 'dd.MM.yyyy'}}
+        </div>
+        <button type="button" nbButton status="primary" (click)="deleteElement(client.id, 0)">
+          Delete
+        </button>
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+  <nb-tab tabTitle="Accounts">
+    <nb-card *ngFor="let account of accounts">
+      <nb-card-header>
+        {{account.id}}
+      </nb-card-header>
+      <nb-card-body>
+        <div>
+          Balance: {{account.balance | number | decimalSeparator}}
+        </div>
+        <div>
+          Date: {{account.openDate | date: 'dd.MM.yyyy'}}
+        </div>
+        <button type="button" nbButton status="primary" (click)="deleteElement(account.id, 1)">
+          Delete
+        </button>
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+  <nb-tab tabTitle="Transactions">
+    <nb-card *ngFor="let transaction of transactions">
+      <nb-card-header>
+        {{transaction.id}}
+      </nb-card-header>
+      <nb-card-body>
+        <div>
+          inAccount: {{transaction.inAccount ? transaction.inAccount : 'Internal'}}
+        </div>
+        <div>
+          outAccount: {{transaction.outAccount ? transaction.outAccount : 'External'}}
+        </div>
+        <div>
+          Date: {{transaction.date | date: 'dd.MM.yyyy'}}
+        </div>
+        <div>
+          Amount: {{transaction.amount | number | decimalSeparator}}
+        </div>
+        <button type="button" nbButton status="primary" (click)="deleteElement(transaction.id, 2)">
+          Delete
+        </button>
+      </nb-card-body>
+    </nb-card>
+  </nb-tab>
+</nb-tabset>

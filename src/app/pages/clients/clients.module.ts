@@ -6,6 +6,8 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FsIconComponent } from './clients-table/clients-table.component';
 import { AccountFormComponent } from './clients-table/account-form/account-form.component';
 import { ClientFormComponent } from './clients-table/client-form/client-form.component';
+import { IntTransFormComponent } from './transactions/int-trans-form/int-trans-form.component';
+import { ExtTransFormComponent } from './transactions/ext-trans-form/ext-trans-form.component';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import { ClientFormComponent } from './clients-table/client-form/client-form.com
     FsIconComponent,
     ClientFormComponent,
     AccountFormComponent,
+    IntTransFormComponent,
+    ExtTransFormComponent,
   ],
   providers: [
     FormBuilder,
