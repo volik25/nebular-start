@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDateService } from '@nebular/theme';
+import { AccountStatuses } from '../../../../models/enums';
 import { Account } from '../../../../models/models';
 import { ApiService } from '../../../../services/api.service';
 
@@ -13,9 +14,11 @@ export class IntTransFormComponent implements OnInit {
   transactionForm: FormGroup;
   accountsNumber: number[] = [];
   private accounts: Account[];
+  public minValue = null;
   public maxValue;
   constructor(private fb: FormBuilder, private api: ApiService, protected dateService: NbDateService<Date>) {
     this._initForm();
+    this.minValue = this.dateService.addYear(this.dateService.today(), -1);
     this.maxValue = this.dateService.addDay(this.dateService.today(), 0);
   }
 
@@ -23,8 +26,28 @@ export class IntTransFormComponent implements OnInit {
     this.api.getAccounts().subscribe(accounts => {
       this.accounts = accounts;
       accounts.forEach(account => {
-        this.accountsNumber.push(account.id);
+        if (account.status == AccountStatuses.Active) {
+          this.accountsNumber.push(account.id);
+        }
       });
+    })
+    this.transactionForm.get('inAccount').valueChanges.subscribe(inAccountId => {
+      this.api.getAccount(inAccountId).subscribe(inAccount => {
+        this.minValue = null;
+        const date = new Date(inAccount.openDate);
+        if (this.dateDifference(this.minValue, date) > 0) {
+          this.minValue = date;
+        }
+      })
+    })
+    this.transactionForm.get('outAccount').valueChanges.subscribe(outAccountId => {
+      this.api.getAccount(outAccountId).subscribe(outAccount => {
+        this.minValue = null;
+        const date = new Date(outAccount.openDate);
+        if (this.dateDifference(this.minValue, date) > 0) {
+          this.minValue = date;
+        }
+      })
     })
   }
 
@@ -36,7 +59,7 @@ export class IntTransFormComponent implements OnInit {
       date: [null, Validators.required]
     });
   }
-  
+
   submit() {
     if (this.transactionForm.invalid) {
       return
@@ -61,5 +84,11 @@ export class IntTransFormComponent implements OnInit {
     this.api.addTransaction(this.transactionForm.getRawValue()).subscribe(transaction => {
       this._initForm();
     })
+  }
+
+  dateDifference(date1, date2) {
+    const dt1 = new Date(date1);
+    const dt2 = new Date(date2);
+    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24));
   }
 }

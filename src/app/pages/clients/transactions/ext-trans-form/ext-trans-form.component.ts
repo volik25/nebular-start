@@ -15,6 +15,7 @@ export class ExtTransFormComponent implements OnInit {
   public transTypes = TransactionValues;
   public accountsNumber: number[] = [];
   public transactionForm: FormGroup;
+  public minValue;
   public maxValue;
   public transaction: Transaction;
   private accounts: Account[];
@@ -29,6 +30,11 @@ export class ExtTransFormComponent implements OnInit {
       accounts.forEach(account => {
         this.accountsNumber.push(account.id);
       });
+    })
+    this.transactionForm.get('accountId').valueChanges.subscribe(accountId => {
+      this.api.getAccount(accountId).subscribe(account => {
+        this.minValue = new Date(account.openDate);
+      })
     })
   }
 
