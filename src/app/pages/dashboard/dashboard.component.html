@@ -2,7 +2,7 @@
   <nb-tab tabTitle="Clients">
     <nb-card *ngFor="let client of clients">
       <nb-card-header>
-        {{client.name}}
+        {{client.name}}: {{client.id}}
       </nb-card-header>
       <nb-card-body>
         <div>
@@ -23,9 +23,12 @@
   <nb-tab tabTitle="Accounts">
     <nb-card *ngFor="let account of accounts">
       <nb-card-header>
-        {{account.id}}
+        Account: {{account.id}}
       </nb-card-header>
       <nb-card-body>
+        <div>
+          Owner: {{account.owner}}
+        </div>
         <div>
           Balance: {{account.balance | number | decimalSeparator}}
         </div>

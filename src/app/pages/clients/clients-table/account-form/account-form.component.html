@@ -17,7 +17,7 @@
         <div class="col-sm-9">
           <input nbInput fullWidth placeholder="Account opening date" [nbDatepicker]="picker" formControlName="openDate"
             id="openDate">
-          <nb-datepicker #picker [max]="maxValue"></nb-datepicker>
+          <nb-datepicker #picker [min]="minValue" [max]="maxValue"></nb-datepicker>
         </div>
       </div>
       <div class="form-group row">

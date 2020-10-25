@@ -39,14 +39,12 @@ export class ClientFormComponent implements OnChanges {
     }
     if (this.client) {
       this.api.updateClient(this.client.id, this.clientForm.getRawValue()).subscribe(client => {
-        console.log(client);
         this.data.emit([client, 'update']);
         this._initForm();
       })
     }
     else{
       this.api.addClient(this.clientForm.getRawValue()).subscribe(client => {
-        console.log(client);
         this.data.emit([client, 'new']);
         this._initForm();
       })

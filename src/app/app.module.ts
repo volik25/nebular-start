@@ -24,7 +24,6 @@ import { AuthGuard } from './services/guards/auth.guard.service';
 import { NbAuthJWTToken, NbAuthModule, NbAuthSimpleToken, NbDummyAuthStrategy, NbPasswordAuthStrategy } from '@nebular/auth';
 import { ApiService } from './services/api.service';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor';
-import { ClientService } from './services/clients.service';
 import { UserService } from './services/user.service';
 
 @NgModule({
@@ -86,7 +85,6 @@ import { UserService } from './services/user.service';
   providers: [
     AuthGuard,
     ApiService,
-    ClientService,
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],

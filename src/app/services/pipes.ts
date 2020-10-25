@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DecimalSeparatorPipe implements PipeTransform {
     transform(value: string): string {
         if(value) {
-          return value.replace(',', ' ');
+          return value.replace(/,/g, ' ');
         }
         return '';
     }

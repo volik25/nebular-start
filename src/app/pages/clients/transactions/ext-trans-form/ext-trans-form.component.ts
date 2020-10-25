@@ -77,7 +77,7 @@ export class ExtTransFormComponent implements OnInit {
         }
         const requests = [this.api.updateAccount(accountId, account), this.api.addTransaction(this.transaction)];
         forkJoin(requests).subscribe(([account, transaction]) => {
-          console.log(account, transaction);
+          this._initForm();
         })
         break;
       }

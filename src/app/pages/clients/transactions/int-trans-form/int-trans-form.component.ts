@@ -14,8 +14,10 @@ export class IntTransFormComponent implements OnInit {
   transactionForm: FormGroup;
   accountsNumber: number[] = [];
   private accounts: Account[];
-  public minValue = null;
+  public minValue;
   public maxValue;
+  public selectedIn;
+  public selectedOut;
   constructor(private fb: FormBuilder, private api: ApiService, protected dateService: NbDateService<Date>) {
     this._initForm();
     this.minValue = this.dateService.addYear(this.dateService.today(), -1);
@@ -33,19 +35,19 @@ export class IntTransFormComponent implements OnInit {
     })
     this.transactionForm.get('inAccount').valueChanges.subscribe(inAccountId => {
       this.api.getAccount(inAccountId).subscribe(inAccount => {
-        this.minValue = null;
-        const date = new Date(inAccount.openDate);
-        if (this.dateDifference(this.minValue, date) > 0) {
-          this.minValue = date;
+        this.minValue = this.selectedOut;
+        this.selectedIn = new Date(inAccount.openDate);
+        if (this.dateDifference(this.minValue, this.selectedIn) > 0) {
+          this.minValue = this.selectedIn;
         }
       })
     })
     this.transactionForm.get('outAccount').valueChanges.subscribe(outAccountId => {
       this.api.getAccount(outAccountId).subscribe(outAccount => {
-        this.minValue = null;
-        const date = new Date(outAccount.openDate);
-        if (this.dateDifference(this.minValue, date) > 0) {
-          this.minValue = date;
+        this.minValue = this.selectedIn;
+        this.selectedOut = new Date(outAccount.openDate);
+        if (this.dateDifference(this.minValue, this.selectedOut) > 0) {
+          this.minValue = this.selectedOut;
         }
       })
     })

@@ -130,13 +130,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   goToProfile(): void {
-    console.log('profile');
+    
   }
 
   logOut(): void {
     this.authService.logout('email').subscribe( res => {
-      console.log(res);
-      
       if (res.isSuccess()) {
         this.toastRef = this.toastrService.show('Success logget out', 'Success', {
           status: 'success',
